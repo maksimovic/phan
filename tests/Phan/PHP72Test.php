@@ -38,7 +38,7 @@ class PHP72Test extends AbstractPhanFileTest
         $skip_reason = null;
         // @phan-suppress-next-line PhanPossiblyFalseTypeArgumentInternal
         $main_path = \basename(\reset($test_file_list));
-        if (\PHP_VERSION_ID < 70200) {
+        if (\PHP_VERSION_ID < Config::PHP_VERSION_7_2) {
             switch ($main_path) {
                 case '0002_hash.php':
                     $skip_reason = 'Skip HashContext has no stub';
@@ -48,7 +48,7 @@ class PHP72Test extends AbstractPhanFileTest
                     break;
             }
         }
-        if (\PHP_VERSION_ID >= 80000) {
+        if (\PHP_VERSION_ID >= Config::PHP_VERSION_8_0) {
             switch ($main_path) {
                 case '0006_deprecated_create_internal_function.php':
                     $skip_reason = 'Skip create_internal_function was removed';

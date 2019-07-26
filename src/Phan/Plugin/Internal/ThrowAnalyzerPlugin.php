@@ -57,7 +57,7 @@ class ThrowAnalyzerPlugin extends PluginV3 implements PostAnalyzeNodeCapability,
         CodeBase $code_base,
         Method $method
     ) : void {
-        if (Config::get_closest_target_php_version_id() >= 70400) {
+        if (Config::get_closest_target_php_version_id() >= Config::PHP_VERSION_7_4) {
             return;
         }
         if (\strcasecmp($method->getName(), '__toString') !== 0) {
@@ -107,7 +107,7 @@ class ThrowVisitor extends PluginAwarePostAnalysisVisitor
             return;
         }
         $analyzed_function = $context->getFunctionLikeInScope($code_base);
-        if (Config::get_closest_target_php_version_id() < 70400) {
+        if (Config::get_closest_target_php_version_id() < Config::PHP_VERSION_7_4) {
             if ($analyzed_function instanceof Method && \strcasecmp('__toString', $analyzed_function->getName()) === 0) {
                 $this->emitIssue(
                     Issue::ThrowStatementInToString,

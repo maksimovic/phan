@@ -7,6 +7,7 @@ use ast;
 use Phan\AST\TolerantASTConverter\NodeDumper;
 use Phan\AST\TolerantASTConverter\Shim;
 use Phan\AST\TolerantASTConverter\TolerantASTConverter;
+use Phan\Config;
 use Phan\Debug;
 use Phan\Tests\BaseTest;
 use RecursiveDirectoryIterator;
@@ -177,10 +178,10 @@ final class ConversionTest extends BaseTest
     public function testFallbackFromParser(string $file_name, int $ast_version) : void
     {
         $test_folder_name = \basename(\dirname($file_name));
-        if (\PHP_VERSION_ID < 70300 && $test_folder_name === 'php73_or_newer') {
+        if (\PHP_VERSION_ID < Config::PHP_VERSION_7_3 && $test_folder_name === 'php73_or_newer') {
             $this->markTestIncomplete('php-ast cannot parse php7.3 syntax when running in php7.2 or older');
         }
-        if (\PHP_VERSION_ID < 70400 && $test_folder_name === 'php74_or_newer') {
+        if (\PHP_VERSION_ID < Config::PHP_VERSION_7_4 && $test_folder_name === 'php74_or_newer') {
             $this->markTestIncomplete('php-ast cannot parse php7.4 syntax when running in php7.3 or older');
         }
         $contents = \file_get_contents($file_name);

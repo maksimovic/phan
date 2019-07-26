@@ -18,6 +18,7 @@ use Microsoft\PhpParser\Parser;
 use Microsoft\PhpParser\Token;
 use Microsoft\PhpParser\TokenKind;
 use Phan\CLI;
+use Phan\Config;
 use Phan\Library\Cache;
 use RuntimeException;
 use function array_merge;
@@ -2659,7 +2660,7 @@ class TolerantASTConverter
                 'key' => $element_key !== null ? static::phpParserNodeToAstNode($element_key) : null,
             ], self::getStartLine($item));
         }
-        if (self::$php_version_id_parsing < 70100 && \count($ast_items) === 0) {
+        if (self::$php_version_id_parsing < Config::PHP_VERSION_7_1 && \count($ast_items) === 0) {
             $ast_items[] = null;
         }
         return new ast\Node(ast\AST_ARRAY, flags\ARRAY_SYNTAX_LIST, $ast_items, $start_line);
@@ -2696,7 +2697,7 @@ class TolerantASTConverter
                 'key' => $element_key !== null ? static::phpParserNodeToAstNode($element_key) : null,
             ], self::getStartLine($item));
         }
-        if (self::$php_version_id_parsing < 70100) {
+        if (self::$php_version_id_parsing < Config::PHP_VERSION_7_1) {
             $flags = 0;
         } else {
             $kind = $n->openParenOrBracket->kind;

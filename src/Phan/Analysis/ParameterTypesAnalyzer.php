@@ -66,7 +66,7 @@ class ParameterTypesAnalyzer
 
         self::checkCommentParametersAreInOrder($code_base, $method);
         $target_php_version = Config::get_closest_target_php_version_id();
-        if ($target_php_version < 70200 && !$method->isFromPHPDoc()) {
+        if ($target_php_version < Config::PHP_VERSION_7_2 && !$method->isFromPHPDoc()) {
             self::analyzeRealSignatureCompatibility($code_base, $method, $target_php_version);
         }
 
@@ -175,7 +175,7 @@ class ParameterTypesAnalyzer
      */
     private static function analyzeRealSignatureCompatibility(CodeBase $code_base, FunctionInterface $method, int $target_php_version) : void
     {
-        $php70_checks = $target_php_version < 70100;
+        $php70_checks = $target_php_version < Config::PHP_VERSION_7_1;
 
         foreach ($method->getRealParameterList() as $real_parameter) {
             foreach ($real_parameter->getUnionType()->getTypeSet() as $type) {

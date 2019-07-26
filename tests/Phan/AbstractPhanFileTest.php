@@ -94,11 +94,11 @@ abstract class AbstractPhanFileTest extends BaseTest implements CodeBaseAwareTes
         );
 
         // NOTE: This is done to avoid ParseError in php-ast
-        if (\PHP_VERSION_ID < 70200) {
+        if (\PHP_VERSION_ID < Config::PHP_VERSION_7_2) {
             $suffix = '71';
-        } elseif (\PHP_VERSION_ID >= 80000) {
+        } elseif (\PHP_VERSION_ID >= Config::PHP_VERSION_8_0) {
             $suffix = '80';
-        } elseif (\PHP_VERSION_ID >= 70400) {
+        } elseif (\PHP_VERSION_ID >= Config::PHP_VERSION_7_4) {
             $suffix = '74';
         } else {
             $suffix = '72';

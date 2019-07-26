@@ -916,7 +916,7 @@ class BlockAnalysisVisitor extends AnalysisVisitor
         }
         $code_base = $this->code_base;
         if ($value_node->kind == ast\AST_ARRAY) {
-            if (Config::get_closest_target_php_version_id() < 70100) {
+            if (Config::get_closest_target_php_version_id() < Config::PHP_VERSION_7_1) {
                 self::analyzeArrayAssignBackwardsCompatibility($code_base, $context, $value_node);
             }
         }

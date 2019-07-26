@@ -3422,12 +3422,12 @@ class UnionType implements Serializable
         if (!$php73_map) {
             $php73_map = self::computeLatestFunctionSignatureMap();
         }
-        if ($target_php_version >= 70400) {
+        if ($target_php_version >= Config::PHP_VERSION_7_4) {
             static $php74_map = [];
             if (!$php74_map) {
                 $php74_map = self::computePHP74FunctionSignatureMap($php73_map);
             }
-            if ($target_php_version >= 80000) {
+            if ($target_php_version >= Config::PHP_VERSION_8_0) {
                 static $php80_map = [];
                 if (!$php80_map) {
                     $php80_map = self::computePHP80FunctionSignatureMap($php74_map);
@@ -3436,28 +3436,28 @@ class UnionType implements Serializable
             }
             return $php74_map;
         }
-        if ($target_php_version >= 70300) {
+        if ($target_php_version >= Config::PHP_VERSION_7_3) {
             return $php73_map;
         }
         static $php72_map = [];
         if (!$php72_map) {
             $php72_map = self::computePHP72FunctionSignatureMap($php73_map);
         }
-        if ($target_php_version >= 70200) {
+        if ($target_php_version >= Config::PHP_VERSION_7_2) {
             return $php72_map;
         }
         static $php71_map = [];
         if (!$php71_map) {
             $php71_map = self::computePHP71FunctionSignatureMap($php72_map);
         }
-        if ($target_php_version >= 70100) {
+        if ($target_php_version >= Config::PHP_VERSION_7_1) {
             return $php71_map;
         }
         static $php70_map = [];
         if (!$php70_map) {
             $php70_map = self::computePHP70FunctionSignatureMap($php71_map);
         }
-        if ($target_php_version >= 70000) {
+        if ($target_php_version >= Config::PHP_VERSION_7_0) {
             return $php70_map;
         }
 

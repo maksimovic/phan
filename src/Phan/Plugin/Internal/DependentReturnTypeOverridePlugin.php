@@ -201,7 +201,7 @@ final class DependentReturnTypeOverridePlugin extends PluginV3 implements
             Func $unused_function,
             array $args
         ) use ($string_or_false) : UnionType {
-            if (count($args) === 0 && Config::get_closest_target_php_version_id() >= 70100) {
+            if (count($args) === 0 && Config::get_closest_target_php_version_id() >= Config::PHP_VERSION_7_1) {
                 return UnionType::fromFullyQualifiedPHPDocString('array<string,string>');
             }
             return $string_or_false;

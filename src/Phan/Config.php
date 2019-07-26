@@ -856,6 +856,14 @@ class Config
 
     const COMPLETION_VSCODE = 'vscode';
 
+    const PHP_VERSION_5_6 = 50600;
+    const PHP_VERSION_7_0 = 70000;
+    const PHP_VERSION_7_1 = 70100;
+    const PHP_VERSION_7_2 = 70200;
+    const PHP_VERSION_7_3 = 70300;
+    const PHP_VERSION_7_4 = 70400;
+    const PHP_VERSION_8_0 = 80000;
+
     /**
      * Disallow the constructor.
      */
@@ -1069,7 +1077,7 @@ class Config
                 self::$configuration['allow_method_param_type_widening_original'] = $value;
                 if ($value === null) {
                     // If this setting is set to null, infer it based on the closest php version id.
-                    self::$configuration[$name] = self::$closest_target_php_version_id >= 70200;
+                    self::$configuration[$name] = self::$closest_target_php_version_id >= self::PHP_VERSION_7_2;
                 }
                 break;
             case 'target_php_version':
@@ -1083,7 +1091,7 @@ class Config
 
                 self::$closest_target_php_version_id = self::computeClosestTargetPHPVersionId($value);
                 if ((self::$configuration['allow_method_param_type_widening_original'] ?? null) === null) {
-                    self::$configuration['allow_method_param_type_widening'] = self::$closest_target_php_version_id >= 70200;
+                    self::$configuration['allow_method_param_type_widening'] = self::$closest_target_php_version_id >= self::PHP_VERSION_7_2;
                 }
                 break;
             case 'exclude_analysis_directory_list':
@@ -1116,20 +1124,30 @@ class Config
     private static function computeClosestTargetPHPVersionId(string $version) : int
     {
         if (\version_compare($version, '6.0') < 0) {
-            return 50600;
-        } elseif (\version_compare($version, '7.1') < 0) {
-            return 70000;
-        } elseif (\version_compare($version, '7.2') < 0) {
-            return 70100;
-        } elseif (\version_compare($version, '7.3') < 0) {
-            return 70200;
-        } elseif (\version_compare($version, '7.4') < 0) {
-            return 70300;
-        } elseif (\version_compare($version, '8.0') < 0) {
-            return 70400;
-        } else {
-            return 80000;
+            return self::PHP_VERSION_5_6;
         }
+
+        if (\version_compare($version, '7.1') < 0) {
+            return self::PHP_VERSION_7_0;
+        }
+
+        if (\version_compare($version, '7.2') < 0) {
+            return self::PHP_VERSION_7_1;
+        }
+
+        if (\version_compare($version, '7.3') < 0) {
+            return self::PHP_VERSION_7_2;
+        }
+
+        if (\version_compare($version, '7.4') < 0) {
+            return self::PHP_VERSION_7_3;
+        }
+
+        if (\version_compare($version, '8.0') < 0) {
+            return self::PHP_VERSION_7_4;
+        }
+
+        return self::PHP_VERSION_8_0;
     }
 
     /**

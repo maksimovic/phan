@@ -158,7 +158,7 @@ abstract class ScopeVisitor extends AnalysisVisitor
 
         foreach (self::aliasTargetMapFromUseNode($node) as $alias => [$flags, $target, $lineno]) {
             $flags = $node->flags ?: $flags;
-            if ($flags === \ast\flags\USE_NORMAL && $target_php_version < 70200) {
+            if ($flags === \ast\flags\USE_NORMAL && $target_php_version < Config::PHP_VERSION_7_2) {
                 self::analyzeUseElemCompatibility($alias, $target, $target_php_version, $lineno);
             }
             if (\strcasecmp($target->getNamespace(), $context->getNamespace()) === 0) {
@@ -215,7 +215,7 @@ abstract class ScopeVisitor extends AnalysisVisitor
         int $lineno
     ) : void {
         $alias_lower = \strtolower($alias);
-        if ($target_php_version < 70100) {
+        if ($target_php_version < Config::PHP_VERSION_7_1) {
             if ($alias_lower === 'void') {
                 Issue::maybeEmit(
                     $this->code_base,

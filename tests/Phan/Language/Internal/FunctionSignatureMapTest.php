@@ -3,6 +3,7 @@
 namespace Phan\Tests\Language\Internal;
 
 use Phan\CodeBase;
+use Phan\Config;
 use Phan\Language\Context;
 use Phan\Language\Type;
 use Phan\Language\UnionType;
@@ -77,18 +78,18 @@ final class FunctionSignatureMapTest extends BaseTest implements CodeBaseAwareTe
     public function phpVersionIdProvider() : array
     {
         return [
-            [70000],  // PHP 7.0
-            [70100],  // PHP 7.1
-            [70200],  // PHP 7.2
-            [70300],  // PHP 7.3
-            [70400],  // PHP 7.4
-            [80000],  // PHP 8.0
+            [Config::PHP_VERSION_7_0],  // PHP 7.0
+            [Config::PHP_VERSION_7_1],  // PHP 7.1
+            [Config::PHP_VERSION_7_2],  // PHP 7.2
+            [Config::PHP_VERSION_7_3],  // PHP 7.3
+            [Config::PHP_VERSION_7_4],  // PHP 7.4
+            [Config::PHP_VERSION_8_0],  // PHP 8.0
         ];
     }
 
     public function testRealFunctionSignatureMap() : void
     {
-        $map = UnionType::internalFunctionSignatureMap(70400);
+        $map = UnionType::internalFunctionSignatureMap(Config::PHP_VERSION_7_4);
         // @phan-suppress-next-line PhanAccessMethodInternal
         $real_map = UnionType::internalFunctionSignatureReturnTypeReal();
         $context = new Context();
